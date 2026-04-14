@@ -56,21 +56,34 @@ const getRequirements = (job, roleType = "main") => {
 const inp = {
   width: "100%", padding: "11px", borderRadius: "10px",
   border: "1px solid rgba(255,255,255,0.3)", fontSize: "14px", boxSizing: "border-box",
-  marginBottom: "12px", outline: "none", background: "rgba(255,255,255,0.9)"
+  marginBottom: "12px", outline: "none", background: "rgba(255,255,255,0.95)",
+  transition: "all 0.3s ease"
 };
+
 const btn = (bg, color = "#fff") => ({
   padding: "12px 20px", borderRadius: "10px", border: "none",
-  background: bg, color, fontWeight: "700", cursor: "pointer", fontSize: "14px"
+  background: bg, color, fontWeight: "700", cursor: "pointer", fontSize: "14px",
+  transition: "all 0.3s ease"
 });
+
 const overlay = {
   position: "fixed", inset: 0, background: "rgba(0,0,0,0.6)",
   display: "flex", alignItems: "center", justifyContent: "center", zIndex: 999,
   backdropFilter: "blur(8px)"
 };
+
 const modalStyle = {
-  background: "rgba(255,255,255,0.95)", borderRadius: "24px", padding: "28px",
-  width: "90%", maxWidth: "400px", maxHeight: "85vh", overflowY: "auto",
-  backdropFilter: "blur(10px)", border: "1px solid rgba(255,255,255,0.5)"
+  background: "rgba(255,255,255,0.15)",
+  backdropFilter: "blur(20px)",
+  WebkitBackdropFilter: "blur(20px)",
+  borderRadius: "24px",
+  padding: "28px",
+  width: "90%",
+  maxWidth: "400px",
+  maxHeight: "85vh",
+  overflowY: "auto",
+  border: "1px solid rgba(255,255,255,0.3)",
+  boxShadow: "0 25px 45px rgba(0,0,0,0.2), 0 0 0 1px rgba(255,255,255,0.2) inset"
 };
 
 const getRelativeTime = (postedAt) => {
@@ -143,7 +156,6 @@ const checkApplied = async (jobId, roleType) => {
 };
 
 const saveApplicantCount = async (jobId, roleType) => {
-  // This is handled by database triggers or can be implemented separately
   console.log("Application saved for job:", jobId, roleType);
 };
 
@@ -182,7 +194,7 @@ const UnifiedJobCard = ({ job, type = "regular", onApply, extraApplicants, curre
   };
 
   return (
-    <div style={{ background: "rgba(255,255,255,0.15)", backdropFilter: "blur(10px)", borderRadius: "18px", padding: "18px", boxShadow: "0 4px 18px rgba(0,0,0,0.1)", marginBottom: "14px", border: job.isNew ? "2px solid #7FFF00" : "1px solid rgba(255,255,255,0.2)", position: "relative" }}>
+    <div style={{ background: "rgba(255,255,255,0.15)", backdropFilter: "blur(10px)", borderRadius: "18px", padding: "18px", boxShadow: "0 4px 18px rgba(0,0,0,0.1)", marginBottom: "14px", border: job.isNew ? "2px solid #7FFF00" : "1px solid rgba(255,255,255,0.2)", position: "relative", transition: "all 0.3s ease" }}>
       {job.isNew && (
         <div style={{ position: "absolute", top: "-10px", left: "16px", background: "#3B6D11", color: "#fff", fontSize: "11px", fontWeight: "800", padding: "3px 10px", borderRadius: "20px", display: "flex", alignItems: "center", gap: "4px" }}>
           <span style={{ width: "6px", height: "6px", borderRadius: "50%", background: "#7FFF00", display: "inline-block" }}></span>
@@ -192,20 +204,20 @@ const UnifiedJobCard = ({ job, type = "regular", onApply, extraApplicants, curre
       
       {isOwner && type === "hiring" && !confirmDelete && (
         <div style={{ position: "absolute", top: "10px", right: "10px", display: "flex", gap: "6px", zIndex: 5 }}>
-          <button onClick={() => onEdit && onEdit(job)} style={{ padding: "5px 10px", borderRadius: "8px", background: "rgba(238,242,255,0.9)", color: "#4338CA", fontWeight: "700", fontSize: "12px", cursor: "pointer", border: "none" }}>
+          <button onClick={() => onEdit && onEdit(job)} style={{ padding: "5px 10px", borderRadius: "8px", background: "rgba(238,242,255,0.9)", color: "#4338CA", fontWeight: "700", fontSize: "12px", cursor: "pointer", border: "none", transition: "all 0.2s" }}>
             ✏️ Edit
           </button>
-          <button onClick={() => setConfirmDelete(true)} style={{ padding: "5px 10px", borderRadius: "8px", background: "rgba(255,241,242,0.9)", color: "#E24B4A", fontWeight: "700", fontSize: "12px", cursor: "pointer", border: "none" }}>
+          <button onClick={() => setConfirmDelete(true)} style={{ padding: "5px 10px", borderRadius: "8px", background: "rgba(255,241,242,0.9)", color: "#E24B4A", fontWeight: "700", fontSize: "12px", cursor: "pointer", border: "none", transition: "all 0.2s" }}>
             🗑️ Delete
           </button>
         </div>
       )}
       
       {confirmDelete && (
-        <div style={{ position: "absolute", inset: 0, background: "rgba(0,0,0,0.85)", backdropFilter: "blur(8px)", borderRadius: "18px", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", zIndex: 10, padding: "20px" }}>
+        <div style={{ position: "absolute", inset: 0, background: "rgba(0,0,0,0.85)", backdropFilter: "blur(10px)", borderRadius: "18px", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", zIndex: 10, padding: "20px" }}>
           <p style={{ margin: "0 0 16px", fontSize: "14px", color: "white", fontWeight: "700", textAlign: "center" }}>⚠️ Delete this job post?</p>
           <div style={{ display: "flex", gap: "10px" }}>
-            <button onClick={() => setConfirmDelete(false)} style={{ ...btn("rgba(255,255,255,0.2)", "white"), padding: "8px 20px", fontSize: "13px" }}>Cancel</button>
+            <button onClick={() => setConfirmDelete(false)} style={{ ...btn("rgba(255,255,255,0.2)", "white"), padding: "8px 20px", fontSize: "13px", border: "1px solid rgba(255,255,255,0.3)" }}>Cancel</button>
             <button onClick={handleDelete} style={{ ...btn("#E24B4A"), padding: "8px 20px", fontSize: "13px" }}>Delete</button>
           </div>
         </div>
@@ -281,7 +293,7 @@ const UnifiedJobCard = ({ job, type = "regular", onApply, extraApplicants, curre
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: "8px" }}>
                   <span style={{ fontSize: "12px", color: "#A5B4FC", fontWeight: "600" }}>👥 {mainCount} applied</span>
                   <button onClick={() => onApply(job, "mainRole")} disabled={mainApplied}
-                    style={{ padding: "8px 18px", borderRadius: "10px", border: "none", background: mainApplied ? "rgba(199,210,254,0.5)" : "#4338CA", color: mainApplied ? "#6366F1" : "#fff", fontWeight: "700", fontSize: "12px", cursor: mainApplied ? "default" : "pointer" }}>
+                    style={{ padding: "8px 18px", borderRadius: "10px", border: "none", background: mainApplied ? "rgba(199,210,254,0.5)" : "#4338CA", color: mainApplied ? "#6366F1" : "#fff", fontWeight: "700", fontSize: "12px", cursor: mainApplied ? "default" : "pointer", transition: "all 0.2s" }}>
                     {mainApplied ? "✓ Applied" : "Apply →"}
                   </button>
                 </div>
@@ -319,7 +331,7 @@ const UnifiedJobCard = ({ job, type = "regular", onApply, extraApplicants, curre
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: "8px" }}>
                   <span style={{ fontSize: "12px", color: "#FBBF24", fontWeight: "600" }}>👥 {newCount} applied</span>
                   <button onClick={() => onApply(job, "newRole")} disabled={newApplied}
-                    style={{ padding: "8px 18px", borderRadius: "10px", border: "none", background: newApplied ? "rgba(254,215,170,0.5)" : "#C2410C", color: newApplied ? "#C2410C" : "#fff", fontWeight: "700", fontSize: "12px", cursor: newApplied ? "default" : "pointer" }}>
+                    style={{ padding: "8px 18px", borderRadius: "10px", border: "none", background: newApplied ? "rgba(254,215,170,0.5)" : "#C2410C", color: newApplied ? "#C2410C" : "#fff", fontWeight: "700", fontSize: "12px", cursor: newApplied ? "default" : "pointer", transition: "all 0.2s" }}>
                     {newApplied ? "✓ Applied" : "Apply →"}
                   </button>
                 </div>
@@ -329,7 +341,7 @@ const UnifiedJobCard = ({ job, type = "regular", onApply, extraApplicants, curre
           
           {job.contact && !isOwner && (
             <a href={`tel:${job.contact}`} style={{ textDecoration: "none", display: "block", marginTop: "12px" }}>
-              <button style={{ width: "100%", padding: "11px", borderRadius: "12px", border: "none", background: "#3B6D11", color: "#fff", fontWeight: "700", fontSize: "14px", cursor: "pointer" }}>
+              <button style={{ width: "100%", padding: "11px", borderRadius: "12px", border: "none", background: "#3B6D11", color: "#fff", fontWeight: "700", fontSize: "14px", cursor: "pointer", transition: "all 0.2s" }}>
                 📞 Contact Employer
               </button>
             </a>
@@ -351,7 +363,7 @@ const UnifiedJobCard = ({ job, type = "regular", onApply, extraApplicants, curre
           )}
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: "14px", paddingTop: "12px", borderTop: "1px solid rgba(255,255,255,0.1)" }}>
             <span style={{ fontSize: "12px", color: "rgba(255,255,255,0.6)" }}>👥 {totalApplicants} applicants</span>
-            <button onClick={() => onApply(job, "mainRole")} style={{ padding: "9px 22px", borderRadius: "10px", border: "none", background: "linear-gradient(135deg, #185FA5, #1e40af)", color: "#fff", fontWeight: "700", fontSize: "13px", cursor: "pointer", boxShadow: "0 2px 8px rgba(0,0,0,0.2)" }}>
+            <button onClick={() => onApply(job, "mainRole")} style={{ padding: "9px 22px", borderRadius: "10px", border: "none", background: "linear-gradient(135deg, #185FA5, #1e40af)", color: "#fff", fontWeight: "700", fontSize: "13px", cursor: "pointer", boxShadow: "0 2px 8px rgba(0,0,0,0.2)", transition: "all 0.2s" }}>
               Apply Now →
             </button>
           </div>
@@ -430,28 +442,28 @@ const ApplyModal = ({ job, onClose, onApplied }) => {
         {sent ? (
           <div style={{ textAlign: "center", padding: "20px 0" }}>
             <div style={{ fontSize: "56px", marginBottom: "16px" }}>🎉</div>
-            <h3 style={{ margin: "0 0 8px", color: "#185FA5" }}>Application Sent!</h3>
-            <p style={{ color: "#666", fontSize: "14px", margin: "0 0 20px" }}>
+            <h3 style={{ margin: "0 0 8px", color: "white", fontSize: "20px", fontWeight: "800" }}>Application Sent!</h3>
+            <p style={{ color: "rgba(255,255,255,0.8)", fontSize: "14px", margin: "0 0 20px" }}>
               <strong>{job.company || job.companyName}</strong> ko teri application gayi.<br />Shortlist hue toh contact karenge!
             </p>
-            <button onClick={onClose} style={{ padding: "12px 30px", borderRadius: "12px", border: "none", background: "#185FA5", color: "#fff", fontWeight: "700", cursor: "pointer", fontSize: "14px" }}>Done ✓</button>
+            <button onClick={onClose} style={{ padding: "12px 30px", borderRadius: "12px", border: "none", background: "#185FA5", color: "#fff", fontWeight: "700", cursor: "pointer", fontSize: "14px", transition: "all 0.2s" }}>Done ✓</button>
           </div>
         ) : (
           <>
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "16px" }}>
-              <h3 style={{ margin: 0, fontSize: "16px" }}>Apply for Job</h3>
-              <button onClick={onClose} style={{ background: "#f3f4f6", border: "none", borderRadius: "8px", padding: "6px 12px", cursor: "pointer", fontSize: "16px" }}>✕</button>
+              <h3 style={{ margin: 0, fontSize: "18px", fontWeight: "800", color: "white" }}>Apply for Job</h3>
+              <button onClick={onClose} style={{ background: "rgba(255,255,255,0.2)", border: "none", borderRadius: "8px", padding: "6px 12px", cursor: "pointer", fontSize: "16px", color: "white" }}>✕</button>
             </div>
-            <div style={{ background: "#f8faff", borderRadius: "14px", padding: "14px", marginBottom: "12px", border: "1px solid #e0e8ff" }}>
-              <p style={{ margin: "0 0 3px", fontWeight: "800", fontSize: "15px", color: "#1a1a1a" }}>{job.title || job.role}</p>
-              <p style={{ margin: "0 0 5px", fontSize: "13px", color: "#555" }}>🏢 {job.company || job.companyName} • 📍 {job.location}</p>
+            <div style={{ background: "rgba(255,255,255,0.1)", borderRadius: "14px", padding: "14px", marginBottom: "12px", border: "1px solid rgba(255,255,255,0.2)" }}>
+              <p style={{ margin: "0 0 3px", fontWeight: "800", fontSize: "15px", color: "white" }}>{job.title || job.role}</p>
+              <p style={{ margin: "0 0 5px", fontSize: "13px", color: "rgba(255,255,255,0.7)" }}>🏢 {job.company || job.companyName} • 📍 {job.location}</p>
               {(job.salaryMin > 0 || job.salaryMax > 0) && (
-                <p style={{ margin: 0, fontSize: "13px", fontWeight: "700", color: "#185FA5" }}>💰 {fmt(job.salaryMin)} – {fmt(job.salaryMax)}/mo</p>
+                <p style={{ margin: 0, fontSize: "13px", fontWeight: "700", color: "#A5B4FC" }}>💰 {fmt(job.salaryMin)} – {fmt(job.salaryMax)}/mo</p>
               )}
             </div>
             {skills.length > 0 && (
-              <div style={{ background: "#fffdf0", borderRadius: "12px", padding: "12px 14px", marginBottom: "12px", border: "1px solid #f0e68c" }}>
-                <p style={{ margin: "0 0 8px", fontSize: "11px", color: "#854D0E", fontWeight: "800" }}>🛠️ REQUIRED SKILLS</p>
+              <div style={{ background: "rgba(255,255,255,0.1)", borderRadius: "12px", padding: "12px 14px", marginBottom: "12px", border: "1px solid rgba(255,255,255,0.2)" }}>
+                <p style={{ margin: "0 0 8px", fontSize: "11px", color: "#FDE047", fontWeight: "800" }}>🛠️ REQUIRED SKILLS</p>
                 <div style={{ display: "flex", flexWrap: "wrap", gap: "6px" }}>
                   {skills.map((sk, i) => {
                     const pal = skillPalette[i % skillPalette.length];
@@ -461,26 +473,26 @@ const ApplyModal = ({ job, onClose, onApplied }) => {
               </div>
             )}
             {userAccount ? (
-              <div style={{ background: "#f0f7e6", borderRadius: "14px", padding: "14px", marginBottom: "16px", border: "1px solid #c8e6c9" }}>
-                <p style={{ margin: "0 0 8px", fontSize: "12px", color: "#3B6D11", fontWeight: "700" }}>✅ Teri profile se apply hoga:</p>
-                <p style={{ margin: "0 0 3px", fontSize: "14px", fontWeight: "800", color: "#1a1a1a" }}>{userAccount.fullName}</p>
-                <p style={{ margin: "0 0 2px", fontSize: "13px", color: "#555" }}>💼 {userAccount.profession}</p>
+              <div style={{ background: "rgba(59,109,17,0.2)", borderRadius: "14px", padding: "14px", marginBottom: "16px", border: "1px solid rgba(59,109,17,0.3)" }}>
+                <p style={{ margin: "0 0 8px", fontSize: "12px", color: "#7FFF00", fontWeight: "700" }}>✅ Teri profile se apply hoga:</p>
+                <p style={{ margin: "0 0 3px", fontSize: "14px", fontWeight: "800", color: "white" }}>{userAccount.fullName}</p>
+                <p style={{ margin: "0 0 2px", fontSize: "13px", color: "rgba(255,255,255,0.7)" }}>💼 {userAccount.profession}</p>
                 {userAccount.skills?.length > 0 && (
-                  <p style={{ margin: "0 0 2px", fontSize: "12px", color: "#555" }}>🛠️ {userAccount.skills.slice(0, 4).join(", ")}{userAccount.skills.length > 4 ? "..." : ""}</p>
+                  <p style={{ margin: "0 0 2px", fontSize: "12px", color: "rgba(255,255,255,0.6)" }}>🛠️ {userAccount.skills.slice(0, 4).join(", ")}{userAccount.skills.length > 4 ? "..." : ""}</p>
                 )}
-                <p style={{ margin: 0, fontSize: "13px", color: "#555" }}>📞 {userAccount.contact}</p>
+                <p style={{ margin: 0, fontSize: "13px", color: "rgba(255,255,255,0.7)" }}>📞 {userAccount.contact}</p>
               </div>
             ) : (
-              <div style={{ background: "#FFF5F5", borderRadius: "12px", padding: "12px", marginBottom: "16px", border: "1px solid #FFDADA" }}>
-                <p style={{ margin: 0, fontSize: "13px", color: "#E24B4A", fontWeight: "600" }}>⚠️ Pehle Account mein Job Profile banao — tab apply kar sakte ho.</p>
+              <div style={{ background: "rgba(255,255,255,0.1)", borderRadius: "12px", padding: "12px", marginBottom: "16px", border: "1px solid rgba(255,255,255,0.2)" }}>
+                <p style={{ margin: 0, fontSize: "13px", color: "#FCA5A5", fontWeight: "600" }}>⚠️ Pehle Account mein Job Profile banao — tab apply kar sakte ho.</p>
               </div>
             )}
             {alreadyApplied ? (
-              <div style={{ background: "#f0f7e6", borderRadius: "12px", padding: "12px", textAlign: "center", border: "1px solid #c8e6c9" }}>
-                <p style={{ margin: 0, fontSize: "14px", color: "#3B6D11", fontWeight: "700" }}>✅ Pehle se apply kar chuke ho!</p>
+              <div style={{ background: "rgba(59,109,17,0.2)", borderRadius: "12px", padding: "12px", textAlign: "center", border: "1px solid rgba(59,109,17,0.3)" }}>
+                <p style={{ margin: 0, fontSize: "14px", color: "#7FFF00", fontWeight: "700" }}>✅ Pehle se apply kar chuke ho!</p>
               </div>
             ) : (
-              <button onClick={handleApply} disabled={!userAccount || isSubmitting} style={{ width: "100%", padding: "13px", borderRadius: "12px", border: "none", background: userAccount ? "#185FA5" : "#ccc", color: "#fff", fontWeight: "700", fontSize: "15px", cursor: userAccount ? "pointer" : "not-allowed", opacity: isSubmitting ? 0.7 : 1 }}>
+              <button onClick={handleApply} disabled={!userAccount || isSubmitting} style={{ width: "100%", padding: "13px", borderRadius: "12px", border: "none", background: userAccount ? "#185FA5" : "#ccc", color: "#fff", fontWeight: "700", fontSize: "15px", cursor: userAccount ? "pointer" : "not-allowed", opacity: isSubmitting ? 0.7 : 1, transition: "all 0.2s" }}>
                 {isSubmitting ? "⏳ Submitting..." : "🚀 Submit Application"}
               </button>
             )}
@@ -572,19 +584,19 @@ const HiringApplyModal = ({ job, roleType, onClose, onApplied }) => {
         {sent ? (
           <div style={{ textAlign: "center", padding: "20px 0" }}>
             <div style={{ fontSize: "56px", marginBottom: "16px" }}>🎉</div>
-            <h3 style={{ margin: "0 0 8px", color: "#3B6D11" }}>Application Sent!</h3>
-            <p style={{ color: "#666", fontSize: "14px", margin: "0 0 6px" }}><strong>{job.companyName}</strong> ko teri application gayi.</p>
-            <p style={{ color: "#555", fontSize: "13px", margin: "0 0 20px" }}>Role: <strong style={{ color: ri.color }}>{ri.name}</strong></p>
-            <button onClick={onClose} style={{ padding: "12px 30px", borderRadius: "12px", border: "none", background: "#3B6D11", color: "#fff", fontWeight: "700", cursor: "pointer", fontSize: "14px" }}>Done ✓</button>
+            <h3 style={{ margin: "0 0 8px", color: "white", fontSize: "20px", fontWeight: "800" }}>Application Sent!</h3>
+            <p style={{ color: "rgba(255,255,255,0.8)", fontSize: "14px", margin: "0 0 6px" }}><strong>{job.companyName}</strong> ko teri application gayi.</p>
+            <p style={{ color: "rgba(255,255,255,0.6)", fontSize: "13px", margin: "0 0 20px" }}>Role: <strong style={{ color: ri.color }}>{ri.name}</strong></p>
+            <button onClick={onClose} style={{ padding: "12px 30px", borderRadius: "12px", border: "none", background: "#3B6D11", color: "#fff", fontWeight: "700", cursor: "pointer", fontSize: "14px", transition: "all 0.2s" }}>Done ✓</button>
           </div>
         ) : (
           <>
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "16px" }}>
               <div>
-                <h3 style={{ margin: "0 0 2px", fontSize: "16px" }}>Apply at {job.companyName}</h3>
-                <p style={{ margin: 0, fontSize: "12px", color: "#888" }}>📍 {job.location}</p>
+                <h3 style={{ margin: "0 0 2px", fontSize: "16px", fontWeight: "800", color: "white" }}>Apply at {job.companyName}</h3>
+                <p style={{ margin: 0, fontSize: "12px", color: "rgba(255,255,255,0.6)" }}>📍 {job.location}</p>
               </div>
-              <button onClick={onClose} style={{ background: "#f3f4f6", border: "none", borderRadius: "8px", padding: "6px 12px", cursor: "pointer", fontSize: "16px" }}>✕</button>
+              <button onClick={onClose} style={{ background: "rgba(255,255,255,0.2)", border: "none", borderRadius: "8px", padding: "6px 12px", cursor: "pointer", fontSize: "16px", color: "white" }}>✕</button>
             </div>
             <div style={{ background: ri.bg, borderRadius: "14px", padding: "14px", marginBottom: "12px", border: `1px solid ${ri.border}` }}>
               <p style={{ margin: "0 0 2px", fontSize: "10px", color: ri.color, fontWeight: "800" }}>{ri.label}</p>
@@ -593,30 +605,30 @@ const HiringApplyModal = ({ job, roleType, onClose, onApplied }) => {
               {ri.desc && (
                 <div style={{ borderTop: `1px solid ${ri.border}`, paddingTop: "8px" }}>
                   <p style={{ margin: "0 0 4px", fontSize: "10px", color: ri.color, fontWeight: "700" }}>📝 JOB DESCRIPTION</p>
-                  <p style={{ margin: 0, fontSize: "12px", color: "#555", lineHeight: 1.6 }}>{ri.desc}</p>
+                  <p style={{ margin: 0, fontSize: "12px", color: "rgba(255,255,255,0.8)", lineHeight: 1.6 }}>{ri.desc}</p>
                 </div>
               )}
             </div>
             {userAccount ? (
-              <div style={{ background: "#f0f7e6", borderRadius: "14px", padding: "14px", marginBottom: "16px", border: "1px solid #c8e6c9" }}>
-                <p style={{ margin: "0 0 7px", fontSize: "12px", color: "#3B6D11", fontWeight: "700" }}>✅ Teri profile se apply hoga:</p>
-                <p style={{ margin: "0 0 3px", fontSize: "14px", fontWeight: "800", color: "#1a1a1a" }}>{userAccount.fullName}</p>
-                <p style={{ margin: "0 0 2px", fontSize: "13px", color: "#555" }}>💼 {userAccount.profession}</p>
-                {userAccount.skills?.length > 0 && <p style={{ margin: "0 0 2px", fontSize: "12px", color: "#555" }}>🛠️ {userAccount.skills.slice(0, 4).join(", ")}{userAccount.skills.length > 4 ? "..." : ""}</p>}
-                <p style={{ margin: 0, fontSize: "13px", color: "#555" }}>📞 {userAccount.contact}</p>
+              <div style={{ background: "rgba(59,109,17,0.2)", borderRadius: "14px", padding: "14px", marginBottom: "16px", border: "1px solid rgba(59,109,17,0.3)" }}>
+                <p style={{ margin: "0 0 7px", fontSize: "12px", color: "#7FFF00", fontWeight: "700" }}>✅ Teri profile se apply hoga:</p>
+                <p style={{ margin: "0 0 3px", fontSize: "14px", fontWeight: "800", color: "white" }}>{userAccount.fullName}</p>
+                <p style={{ margin: "0 0 2px", fontSize: "13px", color: "rgba(255,255,255,0.7)" }}>💼 {userAccount.profession}</p>
+                {userAccount.skills?.length > 0 && <p style={{ margin: "0 0 2px", fontSize: "12px", color: "rgba(255,255,255,0.6)" }}>🛠️ {userAccount.skills.slice(0, 4).join(", ")}{userAccount.skills.length > 4 ? "..." : ""}</p>}
+                <p style={{ margin: 0, fontSize: "13px", color: "rgba(255,255,255,0.7)" }}>📞 {userAccount.contact}</p>
               </div>
             ) : (
-              <div style={{ background: "#FFF5F5", borderRadius: "12px", padding: "12px", marginBottom: "16px", border: "1px solid #FFDADA" }}>
-                <p style={{ margin: 0, fontSize: "13px", color: "#E24B4A", fontWeight: "600" }}>⚠️ Pehle Account mein Job Profile banao — tab apply kar sakte ho.</p>
+              <div style={{ background: "rgba(255,255,255,0.1)", borderRadius: "12px", padding: "12px", marginBottom: "16px", border: "1px solid rgba(255,255,255,0.2)" }}>
+                <p style={{ margin: 0, fontSize: "13px", color: "#FCA5A5", fontWeight: "600" }}>⚠️ Pehle Account mein Job Profile banao — tab apply kar sakte ho.</p>
               </div>
             )}
             {alreadyApplied ? (
-              <div style={{ background: "#f0f7e6", borderRadius: "12px", padding: "12px", textAlign: "center", border: "1px solid #c8e6c9" }}>
-                <p style={{ margin: 0, fontSize: "14px", color: "#3B6D11", fontWeight: "700" }}>✅ Is role ke liye pehle se apply kar chuke ho!</p>
+              <div style={{ background: "rgba(59,109,17,0.2)", borderRadius: "12px", padding: "12px", textAlign: "center", border: "1px solid rgba(59,109,17,0.3)" }}>
+                <p style={{ margin: 0, fontSize: "14px", color: "#7FFF00", fontWeight: "700" }}>✅ Is role ke liye pehle se apply kar chuke ho!</p>
               </div>
             ) : (
               <button onClick={handleApply} disabled={!userAccount || isSubmitting}
-                style={{ width: "100%", padding: "13px", borderRadius: "12px", border: "none", background: userAccount ? "#3B6D11" : "#ccc", color: "#fff", fontWeight: "700", fontSize: "15px", cursor: userAccount ? "pointer" : "not-allowed", opacity: isSubmitting ? 0.7 : 1 }}>
+                style={{ width: "100%", padding: "13px", borderRadius: "12px", border: "none", background: userAccount ? "#3B6D11" : "#ccc", color: "#fff", fontWeight: "700", fontSize: "15px", cursor: userAccount ? "pointer" : "not-allowed", opacity: isSubmitting ? 0.7 : 1, transition: "all 0.2s" }}>
                 {isSubmitting ? "⏳ Submitting..." : "🚀 Submit Application"}
               </button>
             )}
@@ -627,8 +639,345 @@ const HiringApplyModal = ({ job, roleType, onClose, onApplied }) => {
   );
 };
 
-// Rest of the file remains the same (InlineHiringModal, etc.)
-// ... (keep all other components as they are)
+const InlineHiringModal = ({ onClose, onPost, initialData = null }) => {
+  const [companyLogo, setCompanyLogo] = useState(initialData?.companyLogo || null);
+  const [hireForm, setHireForm] = useState({
+    companyName: initialData?.companyName || "",
+    jobType: initialData?.jobType || "fulltime",
+    location: initialData?.location || "",
+    contact: initialData?.contact || "",
+    salaryMin: initialData?.salaryMin || "",
+    salaryMax: initialData?.salaryMax || "",
+    role: initialData?.role || "",
+    noOfEmployee: initialData?.noOfEmployee || "",
+    description: initialData?.description || "",
+    mainRoleSkills: initialData?.mainRoleSkills || [],
+    mainRoleExperience: initialData?.mainRoleExperience || "",
+    newRoleSalaryMin: initialData?.newRoleSalaryMin || "",
+    newRoleSalaryMax: initialData?.newRoleSalaryMax || "",
+    newRole: initialData?.newRole || "",
+    noOfNewEmployee: initialData?.noOfNewEmployee || "",
+    newRoleDescription: initialData?.newRoleDescription || "",
+    newRoleSkills: initialData?.newRoleSkills || [],
+    newRoleExperience: initialData?.newRoleExperience || "",
+  });
+  const [detectingLocation, setDetectingLocation] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showToast, setShowToast] = useState({ show: false, message: "", type: "" });
+  const [showNewRole, setShowNewRole] = useState(!!initialData?.newRole);
+  const [newSkill, setNewSkill] = useState("");
+  const [newRoleNewSkill, setNewRoleNewSkill] = useState("");
+
+  const showToastMessage = (message, type = "success") => {
+    setShowToast({ show: true, message, type });
+    setTimeout(() => setShowToast({ show: false, message: "", type: "" }), 3000);
+  };
+
+  const picToBase64 = (file, cb) => { const r = new FileReader(); r.onload = () => cb(r.result); r.readAsDataURL(file); };
+
+  const addMainSkill = () => {
+    if (newSkill.trim() && !hireForm.mainRoleSkills.includes(newSkill.trim())) {
+      setHireForm(prev => ({
+        ...prev,
+        mainRoleSkills: [...prev.mainRoleSkills, newSkill.trim()]
+      }));
+      setNewSkill("");
+    }
+  };
+
+  const removeMainSkill = (skill) => {
+    setHireForm(prev => ({
+      ...prev,
+      mainRoleSkills: prev.mainRoleSkills.filter(s => s !== skill)
+    }));
+  };
+
+  const addNewRoleSkill = () => {
+    if (newRoleNewSkill.trim() && !hireForm.newRoleSkills.includes(newRoleNewSkill.trim())) {
+      setHireForm(prev => ({
+        ...prev,
+        newRoleSkills: [...prev.newRoleSkills, newRoleNewSkill.trim()]
+      }));
+      setNewRoleNewSkill("");
+    }
+  };
+
+  const removeNewRoleSkill = (skill) => {
+    setHireForm(prev => ({
+      ...prev,
+      newRoleSkills: prev.newRoleSkills.filter(s => s !== skill)
+    }));
+  };
+
+  useEffect(() => {
+    const mainSkills = parseSkills(hireForm.description);
+    const newSkills = parseSkills(hireForm.newRoleDescription);
+    if (mainSkills.length > 0) {
+      setHireForm(prev => ({
+        ...prev,
+        mainRoleSkills: [...new Set([...prev.mainRoleSkills, ...mainSkills])]
+      }));
+    }
+    if (newSkills.length > 0) {
+      setHireForm(prev => ({
+        ...prev,
+        newRoleSkills: [...new Set([...prev.newRoleSkills, ...newSkills])]
+      }));
+    }
+  }, [hireForm.description, hireForm.newRoleDescription]);
+
+  const getLocation = async (pos) => {
+    try {
+      const res = await fetch(`https://nominatim.openstreetmap.org/reverse?lat=${pos.coords.latitude}&lon=${pos.coords.longitude}&format=json`);
+      const data = await res.json();
+      return data.address.city || data.address.town || data.address.village || data.display_name;
+    } catch { return `${pos.coords.latitude.toFixed(2)}, ${pos.coords.longitude.toFixed(2)}`; }
+  };
+
+  const autoLocation = () => {
+    if (navigator.geolocation) {
+      setDetectingLocation(true);
+      navigator.geolocation.getCurrentPosition(async (pos) => {
+        const loc = await getLocation(pos);
+        setHireForm(f => ({ ...f, location: loc }));
+        setDetectingLocation(false);
+      }, () => setDetectingLocation(false));
+    }
+  };
+
+  const totalEmployees = (parseInt(hireForm.noOfEmployee) || 0) + (parseInt(hireForm.noOfNewEmployee) || 0);
+
+  const handlePost = async () => {
+    if (isSubmitting) return;
+    
+    if (!hireForm.companyName || !hireForm.role || !hireForm.location) {
+      showToastMessage("Company name, role aur location bharo!", "error");
+      return;
+    }
+
+    setIsSubmitting(true);
+
+    const userId = getUserId();
+    const userAccount = JSON.parse(localStorage.getItem("userAccount") || "null");
+    const isAdmin = userAccount?.isAdmin === true;
+
+    const postId = initialData?.id || Date.now();
+    const postData = {
+      id: postId,
+      user_id: userId,
+      company_name: hireForm.companyName,
+      company_logo: companyLogo,
+      job_type: hireForm.jobType,
+      location: hireForm.location,
+      contact: hireForm.contact,
+      salary_min: Number(hireForm.salaryMin) || 0,
+      salary_max: Number(hireForm.salaryMax) || 0,
+      role: hireForm.role,
+      no_of_employee: parseInt(hireForm.noOfEmployee) || 0,
+      description: hireForm.description,
+      main_role_skills: hireForm.mainRoleSkills,
+      main_role_experience: hireForm.mainRoleExperience,
+      new_role: hireForm.newRole,
+      no_of_new_employee: parseInt(hireForm.noOfNewEmployee) || 0,
+      new_role_description: hireForm.newRoleDescription,
+      new_role_skills: hireForm.newRoleSkills,
+      new_role_experience: hireForm.newRoleExperience,
+      new_role_salary_min: Number(hireForm.newRoleSalaryMin) || 0,
+      new_role_salary_max: Number(hireForm.newRoleSalaryMax) || 0,
+      posted_by_hr: isAdmin ? userId : null,
+      created_at: new Date().toISOString(),
+      is_new: true
+    };
+
+    try {
+      const { error } = await supabase
+        .from("hiring_posts")
+        .upsert(postData, { onConflict: "id" });
+
+      if (error) {
+        console.error("Error saving to Supabase:", error);
+        showToastMessage("Failed to save hiring post: " + error.message, "error");
+        setIsSubmitting(false);
+        return;
+      }
+
+      showToastMessage(initialData ? "Post updated successfully!" : "Hiring post created successfully!", "success");
+      
+      if (onPost) {
+        await onPost(postData);
+      }
+      
+      setTimeout(() => {
+        setIsSubmitting(false);
+        if (onClose) onClose();
+      }, 1500);
+      
+    } catch (err) {
+      console.error("Error:", err);
+      showToastMessage("Something went wrong!", "error");
+      setIsSubmitting(false);
+    }
+  };
+
+  return (
+    <div style={overlay}>
+      <div style={modalStyle}>
+        {showToast.show && (
+          <div style={{ position: "fixed", top: "20px", left: "50%", transform: "translateX(-50%)", zIndex: 2000 }}>
+            <div style={{ padding: "12px 24px", borderRadius: "12px", background: showToast.type === "success" ? "#10B981" : showToast.type === "error" ? "#EF4444" : "#3B82F6", color: "white", fontWeight: "600", fontSize: "14px", boxShadow: "0 4px 12px rgba(0,0,0,0.2)", backdropFilter: "blur(10px)" }}>
+              {showToast.message}
+            </div>
+          </div>
+        )}
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "16px" }}>
+          <h3 style={{ margin: 0, color: "white", fontSize: "20px", fontWeight: "800" }}>{initialData ? "✏️ Edit Post" : "🏢 Post a Hiring"}</h3>
+          <button onClick={onClose} style={{ background: "rgba(255,255,255,0.2)", border: "none", borderRadius: "8px", padding: "6px 12px", cursor: "pointer", fontSize: "16px", color: "white" }}>✕</button>
+        </div>
+        
+        <PicUpload pic={companyLogo} id="cLogoJob" emoji="🏢" onChange={e => picToBase64(e.target.files[0], setCompanyLogo)} borderColor="#3B6D11" />
+        
+        <input style={inp} placeholder="Company Name *" value={hireForm.companyName} onChange={e => setHireForm(f => ({ ...f, companyName: e.target.value }))} />
+        
+        <label style={{ fontSize: "12px", color: "rgba(255,255,255,0.8)", marginBottom: "6px", display: "block", fontWeight: "600" }}>Job Type</label>
+        <div style={{ display: "flex", gap: "8px", marginBottom: "12px" }}>
+          {["fulltime", "parttime"].map(t => (
+            <button key={t} type="button" onClick={() => setHireForm(f => ({ ...f, jobType: t }))}
+              style={{ flex: 1, padding: "10px", borderRadius: "10px", border: `2px solid ${hireForm.jobType === t ? "#185FA5" : "rgba(255,255,255,0.3)"}`, background: hireForm.jobType === t ? "#E6F1FB" : "rgba(255,255,255,0.1)", fontWeight: "600", cursor: "pointer", fontSize: "13px", color: hireForm.jobType === t ? "#185FA5" : "white", transition: "all 0.2s" }}>
+              {t === "fulltime" ? "⏰ Full Time" : "🕐 Part Time"}
+            </button>
+          ))}
+        </div>
+        
+        <label style={{ fontSize: "12px", color: "rgba(255,255,255,0.8)", marginBottom: "6px", display: "block", fontWeight: "600" }}>Location *</label>
+        <div style={{ display: "flex", gap: "8px", marginBottom: "12px" }}>
+          <input style={{ ...inp, marginBottom: 0, flex: 1 }} placeholder="Enter or auto-detect" value={hireForm.location} onChange={e => setHireForm(f => ({ ...f, location: e.target.value }))} />
+          <button type="button" onClick={autoLocation} disabled={detectingLocation}
+            style={{ padding: "10px 14px", borderRadius: "10px", border: "none", background: detectingLocation ? "#94c4a8" : "#3B6D11", color: "#fff", cursor: detectingLocation ? "not-allowed" : "pointer", fontSize: "18px", minWidth: "46px", transition: "all 0.2s" }}>
+            {detectingLocation ? "⏳" : "📍"}
+          </button>
+        </div>
+        
+        <input style={inp} placeholder="Contact No." type="tel" value={hireForm.contact} onChange={e => setHireForm(f => ({ ...f, contact: e.target.value }))} />
+
+        {/* MAIN ROLE Section */}
+        <div style={{ background: "rgba(238,242,255,0.2)", borderRadius: "12px", padding: "14px", marginBottom: "12px", border: "1px solid rgba(199,210,254,0.5)" }}>
+          <p style={{ margin: "0 0 10px", fontSize: "12px", fontWeight: "800", color: "#C7D2FE" }}>💼 MAIN ROLE</p>
+          <input style={inp} placeholder="Role * (e.g. React Developer)" value={hireForm.role} onChange={e => setHireForm(f => ({ ...f, role: e.target.value }))} />
+          <input style={inp} placeholder="No. of Employees" type="number" value={hireForm.noOfEmployee} onChange={e => setHireForm(f => ({ ...f, noOfEmployee: e.target.value }))} />
+          
+          <label style={{ fontSize: "12px", color: "#C7D2FE", marginBottom: "6px", display: "block", fontWeight: "600" }}>Salary Range</label>
+          <div style={{ display: "flex", gap: "8px", marginBottom: "10px" }}>
+            <input style={{ ...inp, marginBottom: 0 }} type="number" placeholder="Min ₹" value={hireForm.salaryMin} onChange={e => setHireForm(f => ({ ...f, salaryMin: e.target.value }))} />
+            <span style={{ alignSelf: "center", color: "rgba(255,255,255,0.6)" }}>—</span>
+            <input style={{ ...inp, marginBottom: 0 }} type="number" placeholder="Max ₹" value={hireForm.salaryMax} onChange={e => setHireForm(f => ({ ...f, salaryMax: e.target.value }))} />
+          </div>
+          
+          <label style={{ fontSize: "12px", color: "#C7D2FE", marginBottom: "6px", display: "block", fontWeight: "600" }}>📝 Description</label>
+          <textarea style={{ ...inp, height: "80px", resize: "vertical", fontFamily: "inherit", marginBottom: "6px" }}
+            placeholder="Role description likho..." value={hireForm.description} onChange={e => setHireForm(f => ({ ...f, description: e.target.value }))} />
+          
+          <label style={{ fontSize: "12px", color: "#C7D2FE", marginBottom: "6px", display: "block", fontWeight: "600" }}>⭐ Experience Level</label>
+          <select style={inp} value={hireForm.mainRoleExperience} onChange={e => setHireForm(f => ({ ...f, mainRoleExperience: e.target.value }))}>
+            <option value="">Select Experience</option>
+            {EXPERIENCE_LEVELS.map(exp => <option key={exp} value={exp}>{exp}</option>)}
+          </select>
+          
+          <label style={{ fontSize: "12px", color: "#C7D2FE", marginBottom: "6px", display: "block", fontWeight: "600" }}>🛠️ Required Skills</label>
+          <div style={{ display: "flex", flexWrap: "wrap", gap: "6px", marginBottom: "8px" }}>
+            {hireForm.mainRoleSkills.map((skill, i) => (
+              <span key={i} style={{ padding: "4px 10px", borderRadius: "12px", background: skillPalette[i % skillPalette.length].bg, color: skillPalette[i % skillPalette.length].color, fontSize: "11px", fontWeight: "700", border: `1px solid ${skillPalette[i % skillPalette.length].border}` }}>
+                {skill} <button onClick={() => removeMainSkill(skill)} style={{ background: "none", border: "none", cursor: "pointer", marginLeft: "5px", color: "inherit" }}>✕</button>
+              </span>
+            ))}
+          </div>
+          <div style={{ display: "flex", gap: "8px" }}>
+            <input style={{ ...inp, marginBottom: 0, flex: 1 }} placeholder="Add skill" list="main-skills" value={newSkill} onChange={e => setNewSkill(e.target.value)} onKeyPress={(e) => e.key === 'Enter' && addMainSkill()} />
+            <button type="button" onClick={addMainSkill} style={{ ...btn("#4338CA", "#fff"), padding: "10px 18px", fontSize: "14px" }}>+ Add</button>
+          </div>
+          <datalist id="main-skills">{ALL_SKILL_KEYWORDS.map(sk => <option key={sk} value={sk} />)}</datalist>
+        </div>
+
+        {/* NEW ROLE Toggle Button */}
+        <button
+          type="button"
+          onClick={() => setShowNewRole(!showNewRole)}
+          style={{
+            width: "100%",
+            padding: "10px",
+            marginBottom: "12px",
+            borderRadius: "10px",
+            border: `2px solid ${showNewRole ? "#C2410C" : "rgba(255,255,255,0.3)"}`,
+            background: showNewRole ? "rgba(255,247,237,0.3)" : "rgba(255,255,255,0.1)",
+            color: showNewRole ? "#FED7AA" : "white",
+            fontWeight: "600",
+            cursor: "pointer",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: "8px",
+            transition: "all 0.2s"
+          }}
+        >
+          {showNewRole ? "− Hide New Role" : "+ Add New Role (Optional)"}
+        </button>
+
+        {/* NEW ROLE Section (Optional) */}
+        {showNewRole && (
+          <div style={{ background: "rgba(255,247,237,0.2)", borderRadius: "12px", padding: "14px", marginBottom: "12px", border: "1px solid rgba(254,215,170,0.5)" }}>
+            <p style={{ margin: "0 0 10px", fontSize: "12px", fontWeight: "800", color: "#FED7AA" }}>🆕 NEW ROLE</p>
+            <input style={inp} placeholder="New Role (e.g. Helper, Assistant)" value={hireForm.newRole} onChange={e => setHireForm(f => ({ ...f, newRole: e.target.value }))} />
+            <input style={inp} placeholder="No. of Employees" type="number" value={hireForm.noOfNewEmployee} onChange={e => setHireForm(f => ({ ...f, noOfNewEmployee: e.target.value }))} />
+            
+            <label style={{ fontSize: "12px", color: "#FED7AA", marginBottom: "6px", display: "block", fontWeight: "600" }}>Salary Range</label>
+            <div style={{ display: "flex", gap: "8px", marginBottom: "10px" }}>
+              <input style={{ ...inp, marginBottom: 0 }} type="number" placeholder="Min ₹" value={hireForm.newRoleSalaryMin} onChange={e => setHireForm(f => ({ ...f, newRoleSalaryMin: e.target.value }))} />
+              <span style={{ alignSelf: "center", color: "rgba(255,255,255,0.6)" }}>—</span>
+              <input style={{ ...inp, marginBottom: 0 }} type="number" placeholder="Max ₹" value={hireForm.newRoleSalaryMax} onChange={e => setHireForm(f => ({ ...f, newRoleSalaryMax: e.target.value }))} />
+            </div>
+            
+            <label style={{ fontSize: "12px", color: "#FED7AA", marginBottom: "6px", display: "block", fontWeight: "600" }}>📝 Description</label>
+            <textarea style={{ ...inp, height: "80px", resize: "vertical", fontFamily: "inherit", marginBottom: "6px" }}
+              placeholder="New role description..." value={hireForm.newRoleDescription} onChange={e => setHireForm(f => ({ ...f, newRoleDescription: e.target.value }))} />
+            
+            <label style={{ fontSize: "12px", color: "#FED7AA", marginBottom: "6px", display: "block", fontWeight: "600" }}>⭐ Experience Level</label>
+            <select style={inp} value={hireForm.newRoleExperience} onChange={e => setHireForm(f => ({ ...f, newRoleExperience: e.target.value }))}>
+              <option value="">Select Experience</option>
+              {EXPERIENCE_LEVELS.map(exp => <option key={exp} value={exp}>{exp}</option>)}
+            </select>
+            
+            <label style={{ fontSize: "12px", color: "#FED7AA", marginBottom: "6px", display: "block", fontWeight: "600" }}>🛠️ Required Skills</label>
+            <div style={{ display: "flex", flexWrap: "wrap", gap: "6px", marginBottom: "8px" }}>
+              {hireForm.newRoleSkills.map((skill, i) => (
+                <span key={i} style={{ padding: "4px 10px", borderRadius: "12px", background: skillPalette[i % skillPalette.length].bg, color: skillPalette[i % skillPalette.length].color, fontSize: "11px", fontWeight: "700", border: `1px solid ${skillPalette[i % skillPalette.length].border}` }}>
+                  {skill} <button onClick={() => removeNewRoleSkill(skill)} style={{ background: "none", border: "none", cursor: "pointer", marginLeft: "5px", color: "inherit" }}>✕</button>
+                </span>
+              ))}
+            </div>
+            <div style={{ display: "flex", gap: "8px" }}>
+              <input style={{ ...inp, marginBottom: 0, flex: 1 }} placeholder="Add skill" list="new-skills" value={newRoleNewSkill} onChange={e => setNewRoleNewSkill(e.target.value)} onKeyPress={(e) => e.key === 'Enter' && addNewRoleSkill()} />
+              <button type="button" onClick={addNewRoleSkill} style={{ ...btn("#C2410C", "#fff"), padding: "10px 18px", fontSize: "14px" }}>+ Add</button>
+            </div>
+            <datalist id="new-skills">{ALL_SKILL_KEYWORDS.map(sk => <option key={sk} value={sk} />)}</datalist>
+          </div>
+        )}
+
+        {totalEmployees > 0 && (
+          <div style={{ background: "rgba(59,109,17,0.2)", borderRadius: "10px", padding: "12px 16px", marginBottom: "14px", display: "flex", justifyContent: "space-between", alignItems: "center", border: "1px solid rgba(59,109,17,0.3)" }}>
+            <span style={{ fontSize: "14px", color: "#7FFF00", fontWeight: "700" }}>👥 Total Positions</span>
+            <span style={{ fontSize: "18px", fontWeight: "800", color: "#7FFF00" }}>{totalEmployees}</span>
+          </div>
+        )}
+        
+        <div style={{ display: "flex", gap: "10px" }}>
+          <button type="button" onClick={onClose} style={{ ...btn("rgba(255,255,255,0.2)", "white"), flex: 1, border: "1px solid rgba(255,255,255,0.3)" }}>Cancel</button>
+          <button type="button" onClick={handlePost} disabled={isSubmitting} style={{ ...btn("#3B6D11"), flex: 1, opacity: isSubmitting ? 0.7 : 1 }}>
+            {isSubmitting ? "⏳ Posting..." : initialData ? "Update ✓" : "Post Hiring ↗"}
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
 
 // ══════════════════════════════════════════════════════════════
 export default function Job() {
@@ -795,58 +1144,200 @@ export default function Job() {
 
   if (loading) {
     return (
-      <div style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", backgroundImage: `url(${bgImage})`, backgroundSize: "cover" }}>
-        <div style={{ background: "rgba(255,255,255,0.2)", backdropFilter: "blur(10px)", padding: "20px 40px", borderRadius: "20px", color: "white" }}>
+      <div style={{ 
+        minHeight: "100vh", 
+        display: "flex", 
+        alignItems: "center", 
+        justifyContent: "center", 
+        backgroundImage: `url(${bgImage})`, 
+        backgroundSize: "cover",
+        backgroundPosition: "center"
+      }}>
+        <div style={{
+          background: "rgba(255,255,255,0.15)",
+          backdropFilter: "blur(10px)",
+          padding: "30px 50px",
+          borderRadius: "20px",
+          color: "white",
+          fontSize: "18px",
+          fontWeight: "600",
+          border: "1px solid rgba(255,255,255,0.3)",
+          boxShadow: "0 4px 15px rgba(0,0,0,0.2)"
+        }}>
           Loading jobs...
         </div>
       </div>
     );
   }
 
+  // ── HIRING VIEW (Post a Job) with Premium Glass Design ──
   if (isHiring) {
     return (
-      <div style={{ minHeight: "100vh", backgroundImage: `url(${bgImage})`, backgroundSize: "cover", backgroundPosition: "center", backgroundRepeat: "no-repeat", backgroundAttachment: "fixed", padding: "20px" }}>
+      <div style={{ 
+        minHeight: "100vh", 
+        backgroundImage: `url(${bgImage})`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
+        backgroundAttachment: "fixed",
+        padding: "20px",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center"
+      }}>
         <Toaster position="top-center" />
-        <div style={{ maxWidth: "440px", margin: "0 auto" }}>
-          <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "18px" }}>
-            <button onClick={() => navigate("/job")} style={{ background: "rgba(255,255,255,0.2)", backdropFilter: "blur(10px)", border: "1px solid rgba(255,255,255,0.3)", borderRadius: "12px", padding: "10px 14px", cursor: "pointer", fontSize: "18px", color: "white" }}>←</button>
-            <div style={{ flex: 1 }}>
-              <h2 style={{ margin: 0, fontSize: "20px", fontWeight: "800", color: "white" }}>🏢 Post a Job</h2>
-              <p style={{ margin: 0, fontSize: "12px", color: "rgba(255,255,255,0.7)" }}>Create your job posting with Main Role + Optional New Role</p>
+        <div style={{ maxWidth: "500px", width: "100%", margin: "0 auto" }}>
+          <div style={{ 
+            background: "rgba(255,255,255,0.15)", 
+            backdropFilter: "blur(20px)",
+            WebkitBackdropFilter: "blur(20px)",
+            borderRadius: "32px", 
+            padding: "30px", 
+            boxShadow: "0 25px 45px rgba(0,0,0,0.2), 0 0 0 1px rgba(255,255,255,0.2) inset",
+            border: "1px solid rgba(255,255,255,0.3)"
+          }}>
+            <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "24px" }}>
+              <button 
+                onClick={() => navigate("/job")} 
+                style={{ 
+                  background: "rgba(255,255,255,0.2)", 
+                  backdropFilter: "blur(10px)", 
+                  border: "1px solid rgba(255,255,255,0.3)", 
+                  borderRadius: "12px", 
+                  padding: "10px 14px", 
+                  cursor: "pointer", 
+                  fontSize: "18px", 
+                  color: "white",
+                  transition: "all 0.3s ease"
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.background = "rgba(255,255,255,0.3)";
+                  e.currentTarget.style.transform = "scale(1.05)";
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.background = "rgba(255,255,255,0.2)";
+                  e.currentTarget.style.transform = "scale(1)";
+                }}
+              >
+                ←
+              </button>
+              <div style={{ flex: 1 }}>
+                <h2 style={{ margin: 0, fontSize: "24px", fontWeight: "800", color: "white", textShadow: "0 2px 4px rgba(0,0,0,0.1)" }}>🏢 Post a Job</h2>
+                <p style={{ margin: "4px 0 0", fontSize: "13px", color: "rgba(255,255,255,0.7)" }}>Create your job posting with Main Role + Optional New Role</p>
+              </div>
             </div>
-          </div>
-          {/* InlineHiringModal component would go here - keeping existing */}
-          <div style={{ textAlign: "center", padding: "20px", background: "rgba(255,255,255,0.1)", borderRadius: "20px" }}>
-            <p style={{ color: "white" }}>Job posting form would appear here</p>
-            <button onClick={() => navigate("/job")} style={{ ...btn("#3B6D11"), marginTop: "10px" }}>Back to Jobs</button>
+            
+            <InlineHiringModal
+              initialData={null}
+              onClose={() => navigate("/job")}
+              onPost={() => { loadPosts(); navigate("/job"); }}
+            />
           </div>
         </div>
       </div>
     );
   }
 
+  // ── JOB SEARCH VIEW with Premium Glass Design ──
   return (
-    <div style={{ minHeight: "100vh", backgroundImage: `url(${bgImage})`, backgroundSize: "cover", backgroundPosition: "center", backgroundRepeat: "no-repeat", backgroundAttachment: "fixed", padding: "20px", position: "relative" }}>
+    <div style={{ 
+      minHeight: "100vh", 
+      backgroundImage: `url(${bgImage})`,
+      backgroundSize: "cover",
+      backgroundPosition: "center",
+      backgroundRepeat: "no-repeat",
+      backgroundAttachment: "fixed",
+      padding: "20px",
+      position: "relative" 
+    }}>
       <Toaster position="top-center" />
-      <div style={{ maxWidth: "440px", margin: "0 auto" }}>
-        <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "18px" }}>
-          <button onClick={goBack} style={{ background: "rgba(255,255,255,0.2)", backdropFilter: "blur(10px)", border: "1px solid rgba(255,255,255,0.3)", borderRadius: "12px", padding: "10px 14px", cursor: "pointer", fontSize: "18px", color: "white" }}>←</button>
-          <div>
-            <h2 style={{ margin: 0, fontSize: "20px", fontWeight: "800", color: "white", textShadow: "0 2px 4px rgba(0,0,0,0.1)" }}>💼 Job Search</h2>
-            <p style={{ margin: 0, fontSize: "13px", color: "rgba(255,255,255,0.8)" }}>{filteredJobs.length} jobs mile</p>
+      <div style={{ maxWidth: "500px", margin: "0 auto" }}>
+        
+        {/* Edit Modal */}
+        {showEditModal && editingPost && (
+          <div style={overlay}>
+            <div style={modalStyle}>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "16px" }}>
+                <h3 style={{ margin: 0, color: "white", fontSize: "20px", fontWeight: "800" }}>✏️ Edit Job Post</h3>
+                <button onClick={() => setShowEditModal(false)} style={{ background: "rgba(255,255,255,0.2)", border: "none", borderRadius: "8px", padding: "6px 12px", cursor: "pointer", fontSize: "16px", color: "white" }}>✕</button>
+              </div>
+              <InlineHiringModal
+                initialData={editingPost}
+                onClose={() => setShowEditModal(false)}
+                onPost={handleEditUpdate}
+              />
+            </div>
           </div>
-          <button onClick={() => setShowFilters(f => !f)} style={{ marginLeft: "auto", border: "none", borderRadius: "12px", padding: "10px 14px", cursor: "pointer", fontSize: "13px", fontWeight: "700", background: showFilters ? "#185FA5" : "rgba(255,255,255,0.2)", backdropFilter: "blur(10px)", color: showFilters ? "#fff" : "white", border: showFilters ? "none" : "1px solid rgba(255,255,255,0.3)" }}>
-            🔧 Filters
-          </button>
+        )}
+
+        {/* Header Section */}
+        <div style={{ 
+          background: "rgba(255,255,255,0.15)", 
+          backdropFilter: "blur(10px)",
+          borderRadius: "20px", 
+          padding: "20px", 
+          marginBottom: "20px",
+          border: "1px solid rgba(255,255,255,0.2)"
+        }}>
+          <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+            <button 
+              onClick={goBack} 
+              style={{ 
+                background: "rgba(255,255,255,0.2)", 
+                backdropFilter: "blur(10px)", 
+                border: "1px solid rgba(255,255,255,0.3)", 
+                borderRadius: "12px", 
+                padding: "10px 14px", 
+                cursor: "pointer", 
+                fontSize: "18px", 
+                color: "white",
+                transition: "all 0.3s ease"
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.background = "rgba(255,255,255,0.3)";
+                e.currentTarget.style.transform = "scale(1.05)";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.background = "rgba(255,255,255,0.2)";
+                e.currentTarget.style.transform = "scale(1)";
+              }}
+            >
+              ←
+            </button>
+            <div>
+              <h2 style={{ margin: 0, fontSize: "22px", fontWeight: "800", color: "white", textShadow: "0 2px 4px rgba(0,0,0,0.1)" }}>💼 Job Search</h2>
+              <p style={{ margin: "4px 0 0", fontSize: "13px", color: "rgba(255,255,255,0.7)" }}>{filteredJobs.length} jobs found</p>
+            </div>
+            <button 
+              onClick={() => setShowFilters(f => !f)} 
+              style={{ 
+                marginLeft: "auto", 
+                border: "none", 
+                borderRadius: "12px", 
+                padding: "10px 14px", 
+                cursor: "pointer", 
+                fontSize: "13px", 
+                fontWeight: "700", 
+                background: showFilters ? "#185FA5" : "rgba(255,255,255,0.2)", 
+                backdropFilter: "blur(10px)", 
+                color: showFilters ? "#fff" : "white", 
+                border: showFilters ? "none" : "1px solid rgba(255,255,255,0.3)",
+                transition: "all 0.3s ease"
+              }}
+            >
+              🔧 Filters
+            </button>
+          </div>
         </div>
 
+        {/* My Posts Toggle Button */}
         {currentUserId && (
-          <div style={{ marginBottom: "12px" }}>
+          <div style={{ marginBottom: "16px" }}>
             <button
               onClick={() => setShowMyPostsOnly(!showMyPostsOnly)}
               style={{
                 width: "100%",
-                padding: "10px",
+                padding: "12px",
                 borderRadius: "12px",
                 border: `2px solid ${showMyPostsOnly ? "#EC4899" : "rgba(255,255,255,0.3)"}`,
                 background: showMyPostsOnly ? "rgba(236,72,153,0.3)" : "rgba(255,255,255,0.1)",
@@ -857,7 +1348,14 @@ export default function Job() {
                 alignItems: "center",
                 justifyContent: "center",
                 gap: "8px",
-                backdropFilter: "blur(5px)"
+                backdropFilter: "blur(5px)",
+                transition: "all 0.3s ease"
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.background = showMyPostsOnly ? "rgba(236,72,153,0.4)" : "rgba(255,255,255,0.2)";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.background = showMyPostsOnly ? "rgba(236,72,153,0.3)" : "rgba(255,255,255,0.1)";
               }}
             >
               📋 {showMyPostsOnly ? "Showing My Posts Only" : "Show My Posts"}
@@ -865,79 +1363,267 @@ export default function Job() {
           </div>
         )}
 
-        <div style={{ background: "rgba(255,255,255,0.15)", backdropFilter: "blur(10px)", borderRadius: "14px", padding: "14px", marginBottom: "14px", border: "1px solid rgba(255,255,255,0.2)" }}>
-          <div style={{ position: "relative", marginBottom: showFilters ? "10px" : 0 }}>
+        {/* Search and Filters Section */}
+        <div style={{ 
+          background: "rgba(255,255,255,0.15)", 
+          backdropFilter: "blur(10px)", 
+          borderRadius: "16px", 
+          padding: "16px", 
+          marginBottom: "16px", 
+          border: "1px solid rgba(255,255,255,0.2)"
+        }}>
+          <div style={{ position: "relative", marginBottom: showFilters ? "12px" : 0 }}>
             <span style={{ position: "absolute", left: "12px", top: "50%", transform: "translateY(-50%)", fontSize: "16px", pointerEvents: "none" }}>🔍</span>
-            <input style={{ width: "100%", padding: "11px 11px 11px 38px", borderRadius: "10px", border: "1px solid rgba(255,255,255,0.3)", fontSize: "14px", boxSizing: "border-box", outline: "none", background: "rgba(255,255,255,0.9)" }}
-              placeholder="Role, skill ya company search karo..." value={searchRole} onChange={e => setSearchRole(e.target.value)} />
+            <input 
+              style={{ 
+                width: "100%", 
+                padding: "12px 12px 12px 40px", 
+                borderRadius: "12px", 
+                border: "1px solid rgba(255,255,255,0.3)", 
+                fontSize: "14px", 
+                boxSizing: "border-box", 
+                outline: "none", 
+                background: "rgba(255,255,255,0.95)",
+                transition: "all 0.3s ease"
+              }}
+              placeholder="Role, skill ya company search karo..." 
+              value={searchRole} 
+              onChange={e => setSearchRole(e.target.value)} 
+            />
           </div>
           {showFilters && (
             <>
-              <div style={{ position: "relative", marginBottom: "10px" }}>
+              <div style={{ position: "relative", marginBottom: "12px" }}>
                 <span style={{ position: "absolute", left: "12px", top: "50%", transform: "translateY(-50%)", fontSize: "14px", pointerEvents: "none" }}>📍</span>
-                <input style={{ width: "100%", padding: "10px 10px 10px 36px", borderRadius: "10px", border: "1px solid rgba(255,255,255,0.3)", fontSize: "14px", boxSizing: "border-box", outline: "none", background: "rgba(255,255,255,0.9)" }}
-                  placeholder="Location filter..." value={searchLocation} onChange={e => setSearchLocation(e.target.value)} />
+                <input 
+                  style={{ 
+                    width: "100%", 
+                    padding: "10px 10px 10px 36px", 
+                    borderRadius: "10px", 
+                    border: "1px solid rgba(255,255,255,0.3)", 
+                    fontSize: "14px", 
+                    boxSizing: "border-box", 
+                    outline: "none", 
+                    background: "rgba(255,255,255,0.95)"
+                  }}
+                  placeholder="Location filter..." 
+                  value={searchLocation} 
+                  onChange={e => setSearchLocation(e.target.value)} 
+                />
               </div>
-              <div style={{ display: "flex", gap: "8px", marginBottom: "10px" }}>
-                <input style={{ flex: 1, padding: "10px", borderRadius: "10px", border: "1px solid rgba(255,255,255,0.3)", fontSize: "14px", boxSizing: "border-box", outline: "none", background: "rgba(255,255,255,0.9)" }} type="number" placeholder="Min Salary ₹" value={salaryMin} onChange={e => setSalaryMin(e.target.value)} />
+              <div style={{ display: "flex", gap: "8px", marginBottom: "12px" }}>
+                <input 
+                  style={{ 
+                    flex: 1, 
+                    padding: "10px", 
+                    borderRadius: "10px", 
+                    border: "1px solid rgba(255,255,255,0.3)", 
+                    fontSize: "14px", 
+                    boxSizing: "border-box", 
+                    outline: "none", 
+                    background: "rgba(255,255,255,0.95)"
+                  }} 
+                  type="number" 
+                  placeholder="Min Salary ₹" 
+                  value={salaryMin} 
+                  onChange={e => setSalaryMin(e.target.value)} 
+                />
                 <span style={{ alignSelf: "center", color: "rgba(255,255,255,0.8)", fontWeight: "700" }}>—</span>
-                <input style={{ flex: 1, padding: "10px", borderRadius: "10px", border: "1px solid rgba(255,255,255,0.3)", fontSize: "14px", boxSizing: "border-box", outline: "none", background: "rgba(255,255,255,0.9)" }} type="number" placeholder="Max Salary ₹" value={salaryMax} onChange={e => setSalaryMax(e.target.value)} />
+                <input 
+                  style={{ 
+                    flex: 1, 
+                    padding: "10px", 
+                    borderRadius: "10px", 
+                    border: "1px solid rgba(255,255,255,0.3)", 
+                    fontSize: "14px", 
+                    boxSizing: "border-box", 
+                    outline: "none", 
+                    background: "rgba(255,255,255,0.95)"
+                  }} 
+                  type="number" 
+                  placeholder="Max Salary ₹" 
+                  value={salaryMax} 
+                  onChange={e => setSalaryMax(e.target.value)} 
+                />
               </div>
-              <button onClick={() => { setSearchRole(""); setSearchLocation(""); setSalaryMin(""); setSalaryMax(""); setActiveFilter("all"); }}
-                style={{ padding: "8px 16px", borderRadius: "8px", border: "1px solid rgba(255,255,255,0.3)", background: "rgba(255,255,255,0.2)", color: "white", fontWeight: "600", cursor: "pointer", fontSize: "13px" }}>
+              <button 
+                onClick={() => { 
+                  setSearchRole(""); 
+                  setSearchLocation(""); 
+                  setSalaryMin(""); 
+                  setSalaryMax(""); 
+                  setActiveFilter("all"); 
+                }}
+                style={{ 
+                  padding: "8px 16px", 
+                  borderRadius: "8px", 
+                  border: "1px solid rgba(255,255,255,0.3)", 
+                  background: "rgba(255,255,255,0.2)", 
+                  color: "white", 
+                  fontWeight: "600", 
+                  cursor: "pointer", 
+                  fontSize: "13px",
+                  transition: "all 0.3s ease"
+                }}
+                onMouseEnter={(e) => e.currentTarget.style.background = "rgba(255,255,255,0.3)"}
+                onMouseLeave={(e) => e.currentTarget.style.background = "rgba(255,255,255,0.2)"}
+              >
                 🔄 Reset All
               </button>
             </>
           )}
         </div>
 
+        {/* Active Search Tags */}
         {(state.role || state.location || state.salaryMin) && (
-          <div style={{ display: "flex", flexWrap: "wrap", gap: "8px", marginBottom: "12px" }}>
-            {state.role && <span style={{ padding: "5px 13px", borderRadius: "20px", fontSize: "12px", fontWeight: "700", background: "rgba(230,241,251,0.3)", color: "#C7D2FE", border: "1px solid rgba(195,222,255,0.5)" }}>🔍 {state.role}</span>}
-            {state.location && <span style={{ padding: "5px 13px", borderRadius: "20px", fontSize: "12px", fontWeight: "700", background: "rgba(240,253,244,0.3)", color: "#BBF7D0", border: "1px solid rgba(187,247,208,0.5)" }}>📍 {state.location}</span>}
-            {state.salaryMin && <span style={{ padding: "5px 13px", borderRadius: "20px", fontSize: "12px", fontWeight: "700", background: "rgba(254,249,195,0.3)", color: "#FDE047", border: "1px solid rgba(253,224,71,0.5)" }}>💰 {fmt(state.salaryMin)} – {fmt(state.salaryMax)}</span>}
+          <div style={{ display: "flex", flexWrap: "wrap", gap: "8px", marginBottom: "16px" }}>
+            {state.role && (
+              <span style={{ 
+                padding: "6px 14px", 
+                borderRadius: "20px", 
+                fontSize: "12px", 
+                fontWeight: "700", 
+                background: "rgba(230,241,251,0.3)", 
+                color: "#C7D2FE", 
+                border: "1px solid rgba(195,222,255,0.5)",
+                backdropFilter: "blur(5px)"
+              }}>
+                🔍 {state.role}
+              </span>
+            )}
+            {state.location && (
+              <span style={{ 
+                padding: "6px 14px", 
+                borderRadius: "20px", 
+                fontSize: "12px", 
+                fontWeight: "700", 
+                background: "rgba(240,253,244,0.3)", 
+                color: "#BBF7D0", 
+                border: "1px solid rgba(187,247,208,0.5)",
+                backdropFilter: "blur(5px)"
+              }}>
+                📍 {state.location}
+              </span>
+            )}
+            {state.salaryMin && (
+              <span style={{ 
+                padding: "6px 14px", 
+                borderRadius: "20px", 
+                fontSize: "12px", 
+                fontWeight: "700", 
+                background: "rgba(254,249,195,0.3)", 
+                color: "#FDE047", 
+                border: "1px solid rgba(253,224,71,0.5)",
+                backdropFilter: "blur(5px)"
+              }}>
+                💰 {fmt(state.salaryMin)} – {fmt(state.salaryMax)}
+              </span>
+            )}
           </div>
         )}
 
+        {/* Filter Tabs */}
         <FilterTabs active={activeFilter} onChange={setActiveFilter} counts={jobCounts} />
 
+        {/* Jobs List */}
         {filteredJobs.length === 0 ? (
-          <div style={{ background: "rgba(255,255,255,0.15)", backdropFilter: "blur(10px)", borderRadius: "18px", padding: "40px 20px", textAlign: "center", border: "1px solid rgba(255,255,255,0.2)" }}>
+          <div style={{ 
+            background: "rgba(255,255,255,0.15)", 
+            backdropFilter: "blur(10px)", 
+            borderRadius: "20px", 
+            padding: "50px 20px", 
+            textAlign: "center", 
+            border: "1px solid rgba(255,255,255,0.2)"
+          }}>
             <div style={{ fontSize: "48px", marginBottom: "12px" }}>🔎</div>
             <h3 style={{ margin: "0 0 8px", color: "white" }}>Koi job nahi mili</h3>
             {showMyPostsOnly ? (
-              <button onClick={() => navigate("/job", { state: { from: "hiring" } })}
-                style={{ padding: "10px 24px", borderRadius: "10px", border: "none", background: "#3B6D11", color: "#fff", fontWeight: "700", cursor: "pointer" }}>
+              <button 
+                onClick={() => navigate("/job", { state: { from: "hiring" } })}
+                style={{ 
+                  padding: "10px 24px", 
+                  borderRadius: "10px", 
+                  border: "none", 
+                  background: "#3B6D11", 
+                  color: "#fff", 
+                  fontWeight: "700", 
+                  cursor: "pointer",
+                  transition: "all 0.3s ease"
+                }}
+                onMouseEnter={(e) => e.currentTarget.style.background = "#4a8e2f"}
+                onMouseLeave={(e) => e.currentTarget.style.background = "#3B6D11"}
+              >
                 ➕ Post Your First Job
               </button>
             ) : (
-              <button onClick={() => setShowMyPostsOnly(true)}
-                style={{ padding: "10px 24px", borderRadius: "10px", border: "none", background: "#EC4899", color: "#fff", fontWeight: "700", cursor: "pointer" }}>
+              <button 
+                onClick={() => setShowMyPostsOnly(true)}
+                style={{ 
+                  padding: "10px 24px", 
+                  borderRadius: "10px", 
+                  border: "none", 
+                  background: "#EC4899", 
+                  color: "#fff", 
+                  fontWeight: "700", 
+                  cursor: "pointer",
+                  transition: "all 0.3s ease"
+                }}
+                onMouseEnter={(e) => e.currentTarget.style.background = "#f06292"}
+                onMouseLeave={(e) => e.currentTarget.style.background = "#EC4899"}
+              >
                 📋 View My Posts
               </button>
             )}
           </div>
         ) : (
-          filteredJobs.map(job => {
-            return <UnifiedJobCard 
-              key={job.id} 
-              job={job} 
-              type="hiring" 
-              onApply={handleUnifiedApply} 
-              extraApplicants={{ mainRole: 0, newRole: 0 }}
-              currentUserId={currentUserId}
-              onEdit={editJobPost}
-              onDelete={deleteJobPost}
-            />;
-          })
+          <div className="space-y-4">
+            {filteredJobs.map(job => {
+              return <UnifiedJobCard 
+                key={job.id} 
+                job={job} 
+                type="hiring" 
+                onApply={handleUnifiedApply} 
+                extraApplicants={{ mainRole: 0, newRole: 0 }}
+                currentUserId={currentUserId}
+                onEdit={editJobPost}
+                onDelete={deleteJobPost}
+              />;
+            })}
+          </div>
         )}
       </div>
 
+      {/* Floating Post Job Button */}
       <button
         onClick={() => navigate("/job", { state: { from: "hiring" } })}
-        style={{ position: "fixed", bottom: "30px", right: "20px", padding: "14px 22px", borderRadius: "50px", background: "linear-gradient(135deg, #3B6D11, #5a9e2f)", color: "#fff", border: "none", boxShadow: "0 8px 20px rgba(59,109,17,0.4)", cursor: "pointer", fontSize: "16px", fontWeight: "800", display: "flex", alignItems: "center", gap: "8px", zIndex: 998, transition: "transform 0.2s, box-shadow 0.2s", fontFamily: "inherit" }}
-        onMouseEnter={e => { e.currentTarget.style.transform = "scale(1.05)"; e.currentTarget.style.boxShadow = "0 12px 28px rgba(59,109,17,0.5)"; }}
-        onMouseLeave={e => { e.currentTarget.style.transform = "scale(1)"; e.currentTarget.style.boxShadow = "0 8px 20px rgba(59,109,17,0.4)"; }}
+        style={{ 
+          position: "fixed", 
+          bottom: "30px", 
+          right: "20px", 
+          padding: "14px 22px", 
+          borderRadius: "50px", 
+          background: "linear-gradient(135deg, #3B6D11, #5a9e2f)", 
+          color: "#fff", 
+          border: "none", 
+          boxShadow: "0 8px 20px rgba(59,109,17,0.4)", 
+          cursor: "pointer", 
+          fontSize: "16px", 
+          fontWeight: "800", 
+          display: "flex", 
+          alignItems: "center", 
+          gap: "8px", 
+          zIndex: 998, 
+          transition: "all 0.3s ease",
+          fontFamily: "inherit"
+        }}
+        onMouseEnter={e => { 
+          e.currentTarget.style.transform = "scale(1.05)"; 
+          e.currentTarget.style.boxShadow = "0 12px 28px rgba(59,109,17,0.5)"; 
+        }}
+        onMouseLeave={e => { 
+          e.currentTarget.style.transform = "scale(1)"; 
+          e.currentTarget.style.boxShadow = "0 8px 20px rgba(59,109,17,0.4)"; 
+        }}
       >
         <span style={{ fontSize: "20px" }}>➕</span> Post a Job
       </button>
